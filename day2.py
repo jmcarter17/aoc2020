@@ -6,11 +6,31 @@ def process_line(ln):
 
 
 def check_pwd_policy1(processed):
+    """
+    Solve day2 puzzle policy1
+
+    >>> check_pwd_policy1(process_line("1-3 a: abcde"))
+    True
+    >>> check_pwd_policy1(process_line("1-3 b: cdefg"))
+    False
+    >>> check_pwd_policy1(process_line("2-9 c: ccccccccc"))
+    True
+    """
     policy, letter, pwd = processed
     return pwd.count(letter) in policy
 
 
 def check_pwd_policy2(processed):
+    """
+    Solve day2 puzzle policy2
+
+    >>> check_pwd_policy2(process_line("1-3 a: abcde"))
+    True
+    >>> check_pwd_policy2(process_line("1-3 b: cdefg"))
+    False
+    >>> check_pwd_policy2(process_line("2-9 c: ccccccccc"))
+    False
+    """
     policy, letter, pwd = processed
     idx1 = policy[0] - 1
     idx2 = policy[-1] - 1
