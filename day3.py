@@ -1,4 +1,5 @@
 from math import prod
+from utils import timer
 
 
 def get_index(ln, lw, step_right):
@@ -9,19 +10,28 @@ def check_line(line, ln, lw, step_right):
     return line[get_index(ln, lw, step_right)] == '#'
 
 
-def solve_day3(data):
-    lw = len(data[0])
-    part1 = sum(check_line(line, ln, lw, 3) for ln, line in enumerate(data))
-    part2 = [
+@timer
+def solve_part1(data, lw):
+    return sum(check_line(line, ln, lw, 3) for ln, line in enumerate(data))
+
+
+@timer
+def solve_part2(data, lw, part1):
+    return prod([
         sum(check_line(line, ln, lw, 1) for ln, line in enumerate(data)),
         part1,
         sum(check_line(line, ln, lw, 5) for ln, line in enumerate(data)),
         sum(check_line(line, ln, lw, 7) for ln, line in enumerate(data)),
-        sum(check_line(line, ln//2, lw, 1) for ln, line in enumerate(data) if ln % 2 == 0)
-    ]
-    print(part2)
+        sum(check_line(line, ln // 2, lw, 1) for ln, line in enumerate(data) if ln % 2 == 0)
+    ])
 
-    return part1, prod(part2)
+
+def solve_day3(data):
+    lw = len(data[0])
+    part1 = solve_part1(data, lw)
+    part2 = solve_part2(data, lw, part1)
+
+    return part1, part2
 
 
 def main():

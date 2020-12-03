@@ -1,3 +1,6 @@
+from utils import timer
+
+
 def process_line(ln):
     policy, letter, pwd = ln.split()
     policy = get_policy_range(policy)
@@ -43,9 +46,19 @@ def get_policy_range(data):
 
 
 def solve_day2(data):
-    part1 = sum(check_pwd_policy1(ln) for ln in data)
-    part2 = sum(check_pwd_policy2(ln) for ln in data)
+    part1 = solve_part1(data)
+    part2 = solve_part2(data)
     return part1, part2
+
+
+@timer
+def solve_part1(data):
+    return sum(check_pwd_policy1(ln) for ln in data)
+
+
+@timer
+def solve_part2(data):
+    return sum(check_pwd_policy2(ln) for ln in data)
 
 
 def main():
