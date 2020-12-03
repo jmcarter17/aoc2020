@@ -20,21 +20,21 @@ def solve_day1(data, comb_len, target_sum):
     )
 
 
-@timer
-def solve_part1(data):
-    for i, val1 in enumerate(data):
-        for val2 in data[i:]:
-            if val1 + val2 == 2020:
-                return val1*val2
-
-
-@timer
-def solve_part2(data):
-    for i, val1 in enumerate(data):
-        for j, val2 in enumerate(data[i:]):
-            for val3 in data[j:]:
-                if val1 + val2 + val3 == 2020:
-                    return val1*val2*val3
+# @timer
+# def solve_part1(data):
+#     for i, val1 in enumerate(data):
+#         for val2 in data[i:]:
+#             if val1 + val2 == 2020:
+#                 return val1*val2
+#
+#
+# @timer
+# def solve_part2(data):
+#     for i, val1 in enumerate(data):
+#         for j, val2 in enumerate(data[i:]):
+#             for val3 in data[j:]:
+#                 if val1 + val2 + val3 == 2020:
+#                     return val1*val2*val3
 
 
 def main():
@@ -43,8 +43,8 @@ def main():
     print(solve_day1(data, 2, 2020))
     print(solve_day1(data, 3, 2020))
 
-    print(solve_part1(data))
-    print(solve_part2(data))
+    # print(solve_part1(data))
+    # print(solve_part2(data))
 
 
 if __name__ == "__main__":
