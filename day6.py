@@ -1,41 +1,37 @@
 from utils import timer
 
 
-@timer
-def solve_part1(data):
-    pass
-
-
-@timer
-def solve_part2(data):
-    pass
-
-
 def solve_day6(data):
-    part1 = solve_part1(data)
-    part2 = solve_part2(data)
+    part1 = []
+    part2 = []
+    set1 = set()
+    set2 = set(list('abcdefghijklmnopqrstuvwxyz'))
+    for ln in data:
+        if ln == '':
+            part1.append(set1)
+            part2.append(set2)
+            set1 = set()
+            set2 = set(list('abcdefghijklmnopqrstuvwxyz'))
+        else:
+            setln = set(list(ln))
+            set1 = set1.union(setln)
+            set2 = set2.intersection(setln)
 
-    return part1, part2
+    part1.append(set1)
+    part2.append(set2)
+
+    result1 = sum(len(group) for group in part1)
+    result2 = sum(len(group) for group in part2)
+
+    return result1, result2
 
 
 @timer
 def main():
-    yes = []
-    current = set()
     with open("inputs/day6.txt") as f:
-        for line in f:
-            if line == '\n':
-                yes.append(current)
-                current = set()
-            else:
-                for c in line.strip():
-                    current.add(c)
+        data = [ln.strip() for ln in f]
 
-    yes.append(current)
-    print(sum(len(group) for group in yes))
-
-
-    # print(solve_day6(data))
+    print(solve_day6(data))
 
 
 if __name__ == "__main__":
