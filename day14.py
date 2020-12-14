@@ -67,15 +67,11 @@ def process_mem(ln):
 
 def get_all_addresses(maskstr, num):
     num = bin(num)[2:].zfill(36)
-    addresses = []
     count = maskstr.count("X")
-    new = "".join(
+    fstring = "".join(
         "{}" if v == "X" else "1" if v == "1" else num[i] for i, v in enumerate(maskstr)
     )
-    for n in range(2 ** count):
-        n = bin(n)[2:].zfill(count)
-        addresses.append(int(new.format(*n), base=2))
-    return addresses
+    return (int(fstring.format(*bin(n)[2:].zfill(count)), base=2) for n in range(2 ** count))
 
 
 if __name__ == "__main__":
