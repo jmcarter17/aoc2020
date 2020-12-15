@@ -36,7 +36,8 @@ def part1(data):
 def part2(data):
     data = [(d, idx) for idx, d in enumerate(data) if d]
     guess, skip = data[0][0], data[0][0]
-    idx, total_len = 1, len(data)
+    idx = 1
+    total_len = len(data)
     while idx < total_len:
         x, i = data[idx]
         while (guess + i) % x != 0:
