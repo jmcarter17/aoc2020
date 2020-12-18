@@ -1,7 +1,5 @@
 from itertools import product
-
 import numpy as np
-
 from utils import timer
 
 
@@ -48,20 +46,17 @@ def part2(data):
 
 def hyper_conway(data):
     data = pad_data(data)
-    copy = np.copy(data)
-    it = np.nditer(data, flags=["multi_index"])
-    while not it.finished:
-        idx = it.multi_index
-        num_on = count_on_neighbors(copy, idx)
-        if data[idx] == 1:
-            if not 2 <= num_on <= 3:
-                data[idx] = 0
-        else:
-            if num_on == 3:
-                data[idx] = 1
-        it.iternext()
+    next_gen = np.zeros_like(data)
+    for idx in np.ndindex(data.shape):
+        sum_neighbors = count_on_neighbors(data, idx)
+        next_gen[idx] = any(
+            (
+                sum_neighbors == 3,
+                data[idx] == 1 and 2 == sum_neighbors
+            )
+        )
 
-    return data
+    return next_gen
 
 
 def pad_data(data):
@@ -74,9 +69,12 @@ def count_on_neighbors(data, idx):
 
 def get_neighbors(data, idx):
     ranges = (
-        range(max(0, d - 1), min(data.shape[i], d + 2)) for i, d in enumerate(list(idx))
+        range(max(0, d - 1), min(data.shape[i], d + 2)) for i, d in enumerate(idx)
     )
-    return (x for x in product(*ranges) if x != idx)
+    return filter(
+        lambda x: x != idx,
+        product(*ranges),
+    )
 
 
 if __name__ == "__main__":
