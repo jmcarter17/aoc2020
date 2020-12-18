@@ -8,47 +8,47 @@ def process_line(ln):
     return op, val
 
 
-def do_op(data, opid, acc):
-    cmd, val = data[opid]
+def do_op(data, pc, acc):
+    cmd, val = data[pc]
     if cmd == 'jmp':
-        return opid + val, acc
+        return pc + val, acc
     elif cmd == "acc":
         acc += val
-        return opid + 1, acc
+        return pc + 1, acc
     else:
-        return opid + 1, acc
+        return pc + 1, acc
 
 
-def recur(data, opid, acc, seen, success=False):
-    if opid == len(data):
+def recur(data, pc, acc, seen, success=False):
+    if pc == len(data):
         return acc, True
-    if opid in seen:
+    if pc in seen:
         return acc, False
     else:
-        seen.add(opid)
-        return recur(data, *do_op(data, opid, acc), seen, success)
+        seen.add(pc)
+        return recur(data, *do_op(data, pc, acc), seen, success)
 
 
-def solve_day8(data):
+def solve_day8(program):
     seen = set()
-    result, _ = recur(data, 0, 0, seen)
-    result2 = part2(data)
+    result, _ = recur(program, 0, 0, seen)
+    result2 = part2(program)
 
     return result, result2
 
 
-def part2(data):
-    for i, op in enumerate(data):
+def part2(program):
+    for i, op in enumerate(program):
         if op[0] == 'acc':
             continue
         seen = set()
         if op[0] == 'nop':
-            data[i] = ('jmp', op[1])
+            program[i] = ('jmp', op[1])
         elif op[0] == 'jmp':
-            data[i] = ('nop', op[1])
+            program[i] = ('nop', op[1])
 
-        result, success = recur(data, 0, 0, seen)
-        data[i] = op
+        result, success = recur(program, 0, 0, seen)
+        program[i] = op
         if success:
             print(i, op)
             return result
@@ -57,9 +57,9 @@ def part2(data):
 @timer
 def main():
     with open("inputs/day8.txt") as f:
-        data = [process_line(ln.strip()) for ln in f]
+        program = [process_line(ln.strip()) for ln in f]
 
-    print(solve_day8(data))
+    print(solve_day8(program))
 
 
 if __name__ == "__main__":
