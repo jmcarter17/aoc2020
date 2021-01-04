@@ -99,7 +99,7 @@ def part2(tiles, tiles_matches, corners):
             for j in range(dims):
                 image_unrolled.extend(image[i, j, row])
 
-    image_2d = np.reshape(image_unrolled, (dims*8, dims*8))
+    image_2d = np.reshape(image_unrolled, (dims * 8, dims * 8))
 
     count = 0
     monster = sea_monster()
@@ -196,7 +196,8 @@ def get_all_sides(tile):
 
 
 def sea_monster():
-    monster = ("                  # ", "#    ##    ##    ###", " #  #  #  #  #  #   ")
+    with open("inputs/sea_monster.txt") as f:
+        monster = [ln.strip() for ln in f]
     return np.array([[1 if c == "#" else 0 for c in line] for line in monster])
 
 
